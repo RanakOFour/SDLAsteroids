@@ -30,3 +30,7 @@
 *.exe
 *.out
 *.app
+
+/AsteroidsClone/.vs/**
+/AsteroidsClone/x64/**
+/AsteroidsClone/SDL/**

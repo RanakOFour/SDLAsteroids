@@ -3,10 +3,14 @@
 
 int main(int argc, char* args[])
 {
+	std::srand(time(NULL));
 	Game* game = new Game();
 	if (game != nullptr)
 	{
-		game->GameLoop();
+		if (game->MenuLoop())
+		{
+			game->GameLoop();
+		}
 		delete game;
 	}
 	else

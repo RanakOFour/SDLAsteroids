@@ -25,5 +25,5 @@ public:
 	Vector2 operator- (Vector2 other);
 	void operator+= (Vector2 other);
 	void operator-= (Vector2 other);
-	void operator*= (float x);
+	Vector2 operator*= (float x);
 };

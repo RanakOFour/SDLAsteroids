@@ -1,20 +1,26 @@
 #include <SDL.h>
 #include "Asteroid.h"
 #include "GameObject.h"
+#include "Sprite.h"
+#include "Vector2.h"
 
-Asteroid::Asteroid(SDL_Renderer* _renderer, char* _file, float _x, float _y, int _w, int _h) 
-	: GameObject(_renderer, _file, _x, _y, _w, _h)
+Asteroid::Asteroid(SDL_Renderer* renderer, char* file, float x, float y, int w, int h, int pointsToGive, Vector2 parentSpeed) 
+	: GameObject(renderer, file, x, y, w, h, pointsToGive, 'A', parentSpeed)
 {
-
 }
 
 Asteroid::~Asteroid()
 {
-	delete m_Bullet;
-	delete m_ExtraBullet;
 }
 
-GameObject* Asteroid::CreateBullet()
+int Asteroid::OnHit(char type)
 {
+	switch (type)
+	{
+	case 'B':
+		m_ToBeDeleted = true;
+		return m_Points;
+	}
 
+	return 0;
 }

@@ -106,9 +106,10 @@ void Vector2::operator-= (Vector2 other)
 	m_Magnitude = sqrtf((m_X * m_X) + (m_Y * m_Y));
 }
 
-void Vector2::operator*= (float x)
+Vector2 Vector2::operator*= (float x)
 {
 	m_X *= x;
 	m_Y *= x;
 	m_Magnitude = sqrtf((m_X * m_X) + (m_Y * m_Y));
+	return *this;
 }

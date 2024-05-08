@@ -7,11 +7,12 @@
 #include "Player.h"
 #include "Vector2.h"
 
-Player::Player(SDL_Renderer* _renderer, char* _file, int _x, int _y, int _w, int _h, int lives) :
-	GameObject(_renderer, _file, (int)_x, (int)_y, _w, _h)
+Player::Player(SDL_Renderer* renderer, char* file, int x, int y, int w, int h, int lives) :
+	GameObject(renderer, file, (int)x, (int)y, w, h, 0, 'P')
 {
 	m_Lives = lives;
-	m_isShooting = false;
+	m_CanShoot = true;
+	m_IsShooting = false;
 }
 
 void Player::HandleInput()
@@ -88,20 +89,16 @@ void Player::HandleInput()
 		}
 	}
 
-
-	if (key[SDL_SCANCODE_SPACE] && (m_Bullet == nullptr || m_Bullet->GetDeleted()))
+	if (key[SDL_SCANCODE_SPACE] && m_CanShoot)
 	{
-		m_isShooting = true;
+		m_CanShoot = false;
+		m_IsShooting = true;
 	}
 }
 
-GameObject* Player::CreateBullet(int index)
+GameObject* Player::CreateBullet()
 {
-	m_isShooting = false;
-	if (m_Bullet != nullptr)
-	{
-		delete m_Bullet;
-	}
+	m_IsShooting = false;
 	//Calculate the correct position for the bullet (infront of the airplane)
 	float centreX = m_Position.GetX() + (m_SpritePosition.w / 2.0f) - 15.0f;
 	float centreY = m_Position.GetY() + (m_SpritePosition.h / 2.0f) - 15.0f;
@@ -114,8 +111,36 @@ GameObject* Player::CreateBullet(int index)
 
 	float adjustedX = rotatedXRelativeToParent + centreX;
 	float adjustedY = rotatedYRelativeToParent + centreY;
-	m_Bullet = new Bullet(m_renderer, (char*)"Assets/projectile.bmp", adjustedX, adjustedY, m_Rotation, 1000);
-	m_Bullet->SetVelocity(0, 15);
-	m_Bullet->Rotate(rotationRadians);
-	return m_Bullet;
+	Bullet* toReturn = new Bullet(m_Renderer, (char*)"Assets/projectile.bmp", adjustedX, adjustedY, m_Rotation, 1000);
+	toReturn->SetVelocity(0, 15);
+	toReturn->Rotate(rotationRadians);
+	return toReturn;
+}
+
+bool Player::IsShooting()
+{
+	return m_IsShooting;
+}
+
+void Player::SetShooting(bool canShoot)
+{
+	m_CanShoot = canShoot;
+}
+
+int Player::GetLives()
+{
+	return m_Lives;
+}
+
+int Player::OnHit(char type)
+{
+	switch (type)
+	{
+	case 'B':
+		break;
+	default:
+		--m_Lives;
+		m_ToBeDeleted = true;
+	}
+	return 0;
 }

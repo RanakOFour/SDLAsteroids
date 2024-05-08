@@ -4,15 +4,28 @@
 #include "GameObject.h"
 #include "Bullet.h"
 
-GameObject::GameObject(SDL_Renderer* _renderer, char* _file, float _x, float _y, int _w, int _h) :
-	Sprite(_renderer, _file, (int)_x, (int)_y, _w, _h)
+GameObject::GameObject(SDL_Renderer* renderer, char* file, float x, float y, int w, int h, int points, char type) :
+	Sprite(renderer, file, (int)x, (int)y, w, h)
 {
-	m_Bullet = nullptr;
 	m_Velocity = Vector2(0.0f, 0.0f);
-	m_Position = Vector2(_x, _y);
+	m_Position = Vector2(x, y);
 	m_RotationSpeed = 0.0f;
-	m_isShooting = false;
-	m_toBeDeleted = false;
+	m_ToBeDeleted = false;
+	m_Points = points;
+	m_Type = type;
+};
+
+GameObject::GameObject(SDL_Renderer* renderer, char* file, float x, float y, int w, int h, int points, char type, Vector2 parentVelocity) :
+	Sprite(renderer, file, (int)x, (int)y, w, h)
+{
+	m_Velocity = parentVelocity;
+	m_Position = Vector2(x, y);
+	m_RotationSpeed = 0.0f;
+	m_ToBeDeleted = false;
+	m_Points = points;
+	m_Type = type;
+	m_Rotation = (int)parentVelocity.GetMagnitude();
+
 };
 
 GameObject::~GameObject()
@@ -53,6 +66,26 @@ void GameObject::SetVelocity(float x, float y)
 	m_Velocity.SetY(-y);
 }
 
+void GameObject::SetVelocity(Vector2 newVelocity)
+{
+	m_Velocity = newVelocity;
+}
+
+Vector2 GameObject::GetVelocity()
+{
+	return m_Velocity;
+}
+
+void GameObject::SetPosition(float x, float y)
+{
+	m_Position = Vector2(x, y);
+}
+
+Vector2 GameObject::GetPosition()
+{
+	return m_Position;
+}
+
 void GameObject::Rotate(float radians)
 {
 	float xForY = m_Velocity.GetX();
@@ -60,22 +93,28 @@ void GameObject::Rotate(float radians)
 	m_Velocity.SetY((xForY * sinf(radians)) + (m_Velocity.GetY() * cosf(-radians)));
 }
 
-bool GameObject::IsShooting()
+void GameObject::SetDeleted(bool del)
 {
-	return m_isShooting;
+	m_ToBeDeleted = false;
 }
 
 bool GameObject::GetDeleted()
 {
-	return m_toBeDeleted;
+	return m_ToBeDeleted;
 }
 
-GameObject* GameObject::CreateBullet()
+int GameObject::GetPoints()
 {
-	return nullptr;
+	return m_Points;
 }
 
-GameObject* GameObject::GetBullet()
+char GameObject::GetType()
 {
-	return m_Bullet;
+	return m_Type;
+}
+
+int GameObject::OnHit(char type)
+{
+	m_ToBeDeleted = true;
+	return m_Points;
 }

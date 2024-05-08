@@ -1,27 +1,28 @@
+#include <SDL.h>
+#include <SDL_ttf.h>
+
 #pragma once
 #define H_SPRITE
-
-#include <SDL.h>
 
 class Sprite
 {
 protected:
-	SDL_Renderer* m_renderer;
-	SDL_Texture* m_image;
+	SDL_Renderer* m_Renderer;
+	SDL_Texture* m_Image;
 	SDL_Rect m_SpritePosition;
 	float m_Rotation;
 
 public:
-	Sprite(SDL_Renderer* _renderer, char* _file, int _x, int _y, int _w, int _h);
+	Sprite(SDL_Renderer* renderer, int x, int y, int w, int h);
+	Sprite(SDL_Renderer* renderer, char* file, int x, int y, int w, int h);
 	~Sprite();
 
 	virtual void Draw();
 	
-	// setters
-	void SetX(int _x) { m_SpritePosition.x = _x; }
-	void SetY(int _y) { m_SpritePosition.y = _y; }
+	void SetX(int x) { m_SpritePosition.x = x; }
+	void SetY(int y) { m_SpritePosition.y = y; }
+	void SetRotation(float degrees) { m_Rotation = degrees; };
 
-	// getters
 	int GetX() { return m_SpritePosition.x; }
 	int GetY() { return m_SpritePosition.y; }
 	int GetW() { return m_SpritePosition.w; }

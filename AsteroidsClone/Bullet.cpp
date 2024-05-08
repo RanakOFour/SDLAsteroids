@@ -2,7 +2,7 @@
 #include "GameObject.h"
 
 Bullet::Bullet(SDL_Renderer* renderer, char* file, float parentX, float parentY, float parentRotation, float maxDistance)
-	: GameObject(renderer, file, parentX, parentY, 30, 30)
+	: GameObject(renderer, file, parentX, parentY, 30, 30, 0, 'B')
 {
 	m_DistanceTravelled = 0;
 	m_MaxDistance = maxDistance;
@@ -40,9 +40,22 @@ void Bullet::Move()
 	m_SpritePosition.x = (int)m_Position.GetX();
 	m_SpritePosition.y = (int)m_Position.GetY();
 
+
+	//Tracks distance travelled so it can despawn after a certain amount of time (~67 frames)
 	m_DistanceTravelled += m_Velocity.GetMagnitude();
 	if (m_DistanceTravelled >= m_MaxDistance)
 	{
-		m_toBeDeleted = true;
+		m_ToBeDeleted = true;
 	}
+}
+
+int Bullet::OnHit(char type)
+{
+	switch (type)
+	{
+	case 'A':
+	case 'U':
+		m_ToBeDeleted = true;
+	}
+	return 0;
 }

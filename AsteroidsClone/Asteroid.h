@@ -4,13 +4,8 @@
 
 class Asteroid : public GameObject
 {
-private:
-	GameObject* m_ExtraBullet;
-
 public:
-	Asteroid(SDL_Renderer* _renderer, char* _file, float _x, float _y, int _w, int _h);
+	Asteroid(SDL_Renderer* renderer, char* file, float x, float y, int w, int h, int points, Vector2 velocity);
 	~Asteroid();
-	GameObject* CreateBullet();
-	void OnHit();
-	GameObject* GetOtherBullet();
+	int OnHit(char otherType);
 };

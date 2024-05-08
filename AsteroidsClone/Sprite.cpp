@@ -1,32 +1,45 @@
 #include <SDL.h>
+#include <SDL_ttf.h>
+#include <iostream>
 #include "Sprite.h"
 
-Sprite::Sprite(SDL_Renderer* _renderer, char* _file, int _x, int _y, int _w, int _h)
+Sprite::Sprite(SDL_Renderer* renderer, int x, int y, int w, int h)
 {
-	SDL_Surface* bmpFile = SDL_LoadBMP(_file);
-	m_image = SDL_CreateTextureFromSurface(_renderer, bmpFile);
+	m_Renderer = renderer;
+	m_SpritePosition.x = x;
+	m_SpritePosition.y = y;
+	m_SpritePosition.w = w;
+	m_SpritePosition.h = h;
+	m_Rotation = 0.0f;
+	m_Image = nullptr;
+}
+
+Sprite::Sprite(SDL_Renderer* renderer, char* file, int x, int y, int w, int h)
+{
+	SDL_Surface* bmpFile = SDL_LoadBMP(file);
+	m_Image = SDL_CreateTextureFromSurface(renderer, bmpFile);
 	SDL_FreeSurface(bmpFile);
 	m_Rotation = 0.0f;
 	// iniitial position & w/h of sprite, based in incoming parameters
 	
-	m_SpritePosition.x = _x;
-	m_SpritePosition.y = _y;
-	m_SpritePosition.w = _w;
-	m_SpritePosition.h = _h;
+	m_SpritePosition.x = x;
+	m_SpritePosition.y = y;
+	m_SpritePosition.w = w;
+	m_SpritePosition.h = h;
 
-	m_renderer = _renderer;
+	m_Renderer = renderer;
 }
 
 Sprite::~Sprite()
 {
-	if (m_image)
-		SDL_DestroyTexture(m_image);
+	if (m_Image)
+		SDL_DestroyTexture(m_Image);
 }
 
 void Sprite::Draw()
 {
-	if (m_image)
-		SDL_RenderCopyEx(m_renderer, m_image, NULL, &m_SpritePosition, m_Rotation, NULL, SDL_FLIP_NONE);
+	if (m_Image)
+		SDL_RenderCopyEx(m_Renderer, m_Image, NULL, &m_SpritePosition, m_Rotation, NULL, SDL_FLIP_NONE);
 }
 
 bool Sprite::IsCollidingWith(Sprite* other)

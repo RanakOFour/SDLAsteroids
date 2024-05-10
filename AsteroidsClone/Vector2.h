@@ -23,7 +23,9 @@ public:
 	Vector2 Normalized();
 	Vector2 operator+ (Vector2 other);
 	Vector2 operator- (Vector2 other);
+	Vector2 operator* (float x);
 	void operator+= (Vector2 other);
 	void operator-= (Vector2 other);
 	Vector2 operator*= (float x);
+	bool operator== (Vector2 other);
 };

@@ -1,15 +1,13 @@
 #include "Animation.h"
 #include <SDL.h>
-#include <SDL_mixer.h>
 #include <vector>
 
-Animation::Animation(SDL_Renderer* renderer, char* imageFile, char* soundFile, int frameCount, int frameW, int frameH, int totalFrameW, int totalFrameH)
+Animation::Animation(SDL_Renderer* renderer, char* imageFile, int frameCount, int frameW, int frameH, int totalFrameW, int totalFrameH)
 {
 	m_Renderer = renderer;
 	SDL_Surface* bmpFile = SDL_LoadBMP(imageFile);
 	m_SpriteSheet = SDL_CreateTextureFromSurface(m_Renderer, bmpFile);
 	SDL_FreeSurface(bmpFile);
-	m_SoundEffect = Mix_LoadMUS(soundFile);
 
 	m_Frames = std::vector<SDL_Rect*>();
 	for (int i = 0; i < totalFrameH; i += frameH)
@@ -38,7 +36,6 @@ void Animation::StartAnim(Vector2 position)
 	m_SpritePosition.h = 150;
 	
 	SDL_RenderCopy(m_Renderer, m_SpriteSheet, m_Frames[currentFrame], &m_SpritePosition);
-	Mix_PlayMusic(m_SoundEffect, 0);
 	++currentFrame;
 }
 
@@ -54,3 +51,4 @@ void Animation::NextFrame()
 		isOver = true;
 	}
 }
+

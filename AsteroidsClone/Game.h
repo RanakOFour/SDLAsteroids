@@ -7,6 +7,7 @@
 #include "Player.h"
 #include "Sprite.h"
 #include "TextSprite.h"
+#include "MusicPlayer.h"
 
 #pragma once
 #define H_GAME
@@ -25,15 +26,19 @@ private:
 	SDL_Renderer* m_Renderer;
 	SDL_Color m_Color;
 	Sprite* m_Background;
-	TextSprite* m_ScoreText;
-	TextSprite* m_LivesText;
+	MusicPlayer m_MusicPlayer;
 	int Initialise();
 
 public:
 	Game();
 	~Game();
 	bool MenuLoop();
-	void GameLoop();
-	void CreateNewAsteroids(int baseIndex);
+	bool GameLoop();
+	void ShowTutorial();
+	void CreateAsteroids();
+	void CreateChildAsteroids(int baseIndex);
 	void RespawnPlayer(Player* player);
+	void SpawnUFO();
+	bool GameOverScreen();
+	Vector2 GetFreeCoordinates(int initBounds);
 };

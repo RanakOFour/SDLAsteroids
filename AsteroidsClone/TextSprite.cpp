@@ -20,7 +20,7 @@ TextSprite::TextSprite(SDL_Renderer* renderer, char* fontFile, char* text, SDL_C
 }
 
 void TextSprite::ChangeText(const char* text)
-{
+ {
 	m_Text = text;
 	SDL_Surface* textSurface = TTF_RenderText_Solid(m_Font, m_Text.c_str(), m_Color);
 	m_Image = SDL_CreateTextureFromSurface(m_Renderer, textSurface);

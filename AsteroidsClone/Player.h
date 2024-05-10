@@ -1,20 +1,12 @@
-#include "GameObject.h"
+#include "Spaceship.h"
 #pragma once
 #define H_PLAYER
 
-class Player : public GameObject
+class Player : public Spaceship
 {
-private:
-	int m_Lives;
-	bool m_IsShooting;
-	bool m_CanShoot;
 
 public:
-	Player(SDL_Renderer* _renderer, char* _file, int _x, int _y, int _w, int _h, int lives);
+	Player(SDL_Renderer* renderer, char* file, int x, int y, int w, int h);
 	void HandleInput();
-	GameObject* CreateBullet();
-	bool IsShooting();
-	void SetShooting(bool canShoot);
-	int GetLives();
-	int OnHit(char otherType);
+	int OnHit(char type);
 };

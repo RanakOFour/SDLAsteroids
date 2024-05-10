@@ -92,6 +92,11 @@ Vector2 Vector2::operator- (Vector2 other)
 	return Vector2(m_X - other.m_X, m_Y - other.m_Y);
 }
 
+Vector2 Vector2::operator* (float x)
+{
+	return Vector2(m_X * x, m_Y * x);
+}
+
 void Vector2::operator+= (Vector2 other)
 {
 	m_X += other.m_X;
@@ -112,4 +117,17 @@ Vector2 Vector2::operator*= (float x)
 	m_Y *= x;
 	m_Magnitude = sqrtf((m_X * m_X) + (m_Y * m_Y));
 	return *this;
+}
+
+bool Vector2::operator== (Vector2 other)
+{
+	if (this->m_X == other.m_X)
+	{
+		if (this->m_Y == other.m_Y)
+		{
+			return true;
+		}
+	}
+
+	return false;
 }

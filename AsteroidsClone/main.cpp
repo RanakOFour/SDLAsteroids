@@ -4,13 +4,25 @@
 int main(int argc, char* args[])
 {
 	std::srand(time(NULL));
+	bool exitGame = true;
+
 	Game* game = new Game();
 	if (game != nullptr)
 	{
-		if (game->MenuLoop())
+		while (exitGame)
 		{
-			game->GameLoop();
+			exitGame = game->MenuLoop();
+			if (exitGame)
+			{
+				//Gameloop return true when pressing restart, and false when returning to menu
+				while (game->GameLoop())
+				{
+
+				}
+			}
 		}
+
+
 		delete game;
 	}
 	else

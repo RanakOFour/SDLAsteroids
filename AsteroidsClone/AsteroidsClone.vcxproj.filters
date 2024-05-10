@@ -19,6 +19,12 @@
     <Filter Include="Resource Files\GameObjects">
       <UniqueIdentifier>{0f508b85-7103-4c4b-acf1-ff7add1a64f1}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Sprite">
+      <UniqueIdentifier>{ba02e786-e149-4e9e-8623-6ac4784066e5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Resource Files\Sprite">
+      <UniqueIdentifier>{8b4c4186-1522-4db6-aebb-d557964a9222}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
@@ -28,9 +34,6 @@
       <Filter>Resource Files</Filter>
     </ClCompile>
     <ClCompile Include="Vector2.cpp">
-      <Filter>Resource Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Sprite.cpp">
       <Filter>Resource Files</Filter>
     </ClCompile>
     <ClCompile Include="Asteroid.cpp">
@@ -48,8 +51,20 @@
     <ClCompile Include="Animation.cpp">
       <Filter>Resource Files</Filter>
     </ClCompile>
-    <ClCompile Include="TextSprite.cpp">
+    <ClCompile Include="Spaceship.cpp">
+      <Filter>Resource Files\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="UFO.cpp">
+      <Filter>Resource Files\GameObjects</Filter>
+    </ClCompile>
+    <ClCompile Include="MusicPlayer.cpp">
       <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite.cpp">
+      <Filter>Resource Files\Sprite</Filter>
+    </ClCompile>
+    <ClCompile Include="TextSprite.cpp">
+      <Filter>Resource Files\Sprite</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -57,9 +72,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Vector2.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Sprite.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Asteroid.h">
@@ -74,8 +86,20 @@
     <ClInclude Include="Animation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TextSprite.h">
+    <ClInclude Include="Spaceship.h">
+      <Filter>Header Files\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="UFO.h">
+      <Filter>Header Files\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="MusicPlayer.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprite.h">
+      <Filter>Header Files\Sprite</Filter>
+    </ClInclude>
+    <ClInclude Include="TextSprite.h">
+      <Filter>Header Files\Sprite</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

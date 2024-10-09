@@ -142,7 +142,7 @@ bool Game::GameLoop()
 	Uint64 totalFrames{ 0 };
 	SDL_Event e;
 
-	Player* player = new Player(m_Renderer, (char*)"Assets/ship.bmp", 885, 465, 94, 87);
+	Player* player = new Player(&m_GameObjects, &m_MusicPlayer, m_Renderer, (char*)"Assets/ship.bmp", 885, 465, 94, 87);
 	m_GameObjects.push_back(player);
 	++m_ObjectsInScene;
 
@@ -178,17 +178,7 @@ bool Game::GameLoop()
 			}
 		}
 
-		SDL_RenderClear(m_Renderer);
-		m_Background->Draw();
-
-		player->HandleInput();
-		if (player->IsShooting())
-		{
-			m_GameObjects.push_back(player->CreateBullet());
-			++m_ObjectsInScene;
-			m_MusicPlayer.BulletSoundEffect();
-		}
-
+		//Begin the math phase
 		for (int i = 0; i < m_ObjectsInScene; i++)
 		{
 			for (int j = 0; j < m_ObjectsInScene; j++)
@@ -202,9 +192,11 @@ bool Game::GameLoop()
 			}
 		}
 
+		m_ObjectsInScene = m_GameObjects.size();
+
 		for (int i = 0; i < m_ObjectsInScene; i++)
 		{
-			//Putting the move & draw in collision leads to incorrect collisions?
+			//Putting the move & draw in collision leads to incorrect collisions
 			if (m_GameObjects[i]->GetDeleted())
 			{
 				switch (m_GameObjects[i]->GetType())
@@ -218,7 +210,7 @@ bool Game::GameLoop()
 					break;
 
 				case 'A': //Spawn child asteroids & update score text
-					CreateChildAsteroids(i);
+					
 				case 'U':
 					m_ScoreText->ChangeText(std::string("Score: " + std::to_string(m_PlayerScore)).c_str());
 					m_MusicPlayer.OtherHitEffect();
@@ -237,9 +229,18 @@ bool Game::GameLoop()
 			}
 			else
 			{
-				m_GameObjects[i]->Move();
-				m_GameObjects[i]->Draw();
+				//Every gameobject does it's per frame
+				m_GameObjects[i]->PerFrame();
 			}
+		}
+
+		//Draw phase
+		SDL_RenderClear(m_Renderer);
+		m_Background->Draw();
+
+		for (int i = 0; i < m_ObjectsInScene; i++)
+		{
+			m_GameObjects[i]->Draw();
 		}
 
 		m_ScoreText->Draw();
@@ -309,45 +310,23 @@ void Game::ShowTutorial()
 void Game::CreateAsteroids()
 {
 	//Create 4 asteroids in the corners of the map and rotate them by a random amount
-	Asteroid* ast = new Asteroid(m_Renderer, (char*)"Assets/asteroid.bmp", 0, 0, 200, 200, 100, Vector2(4, 4));
+	Asteroid* ast = new Asteroid(&m_GameObjects, &m_MusicPlayer, m_Renderer, (char*)"Assets/asteroid.bmp", 0, 0, 200, 200, 100, Vector2(4, 4));
 	ast->Rotate(rand() % 6);
 	m_GameObjects.push_back(ast);
 
-	ast = new Asteroid(m_Renderer, (char*)"Assets/asteroid.bmp", 1720, 0, 200, 200, 100, Vector2(4, 4));
+	ast = new Asteroid(&m_GameObjects, &m_MusicPlayer, m_Renderer, (char*)"Assets/asteroid.bmp", 1720, 0, 200, 200, 100, Vector2(4, 4));
 	ast->Rotate(rand() % 6);
 	m_GameObjects.push_back(ast);
 
-	ast = new Asteroid(m_Renderer, (char*)"Assets/asteroid.bmp", 0, 880, 200, 200, 100, Vector2(4, 4));
+	ast = new Asteroid(&m_GameObjects, &m_MusicPlayer, m_Renderer, (char*)"Assets/asteroid.bmp", 0, 880, 200, 200, 100, Vector2(4, 4));
 	ast->Rotate(rand() % 6);
 	m_GameObjects.push_back(ast);
 
-	ast = new Asteroid(m_Renderer, (char*)"Assets/asteroid.bmp", 1720, 880, 200, 200, 100, Vector2(4, 4));
+	ast = new Asteroid(&m_GameObjects, &m_MusicPlayer, m_Renderer, (char*)"Assets/asteroid.bmp", 1720, 880, 200, 200, 100, Vector2(4, 4));
 	ast->Rotate(rand() % 6);
 	m_GameObjects.push_back(ast);
 
 	m_ObjectsInScene += 4;
-}
-
-void Game::CreateChildAsteroids(int baseIndex)
-{
-	if (m_GameObjects[baseIndex]->GetW() > 50)
-	{
-		float baseX = m_GameObjects[baseIndex]->GetX();
-		float baseY = m_GameObjects[baseIndex]->GetY();
-		int baseW = m_GameObjects[baseIndex]->GetW();
-		int baseH = m_GameObjects[baseIndex]->GetH();
-		int basePoints = m_GameObjects[baseIndex]->GetPoints();
-		Vector2 baseV = m_GameObjects[baseIndex]->GetVelocity();
-
-		Asteroid* newAsteroid1 = new Asteroid(m_Renderer, (char*)"Assets/asteroid.bmp", baseX + (baseW / 2), baseY, baseW / 2, baseH / 2, basePoints * 4, baseV);
-		newAsteroid1->Rotate(0.5235988f);
-		Asteroid* newAsteroid2 = new Asteroid(m_Renderer, (char*)"Assets/asteroid.bmp", baseX + (baseW / 2), baseY, baseW / 2, baseH / 2, basePoints * 4, baseV);
-		newAsteroid2->Rotate(-0.5235988f);
-
-		m_GameObjects.push_back(newAsteroid1);
-		m_GameObjects.push_back(newAsteroid2);
-		m_ObjectsInScene += 2;
-	}
 }
 
 void Game::RespawnPlayer(Player* player)
@@ -355,7 +334,7 @@ void Game::RespawnPlayer(Player* player)
 	m_MusicPlayer.PlayerHitEffect();
 
 	//Play explosion effect
-	Animation explosion = Animation(m_Renderer, (char*)"Assets/explosion.bmp", 40, 125, 120, 1000, 600);
+	Animation explosion = Animation(m_Renderer, (char*)"Assets/explosion.bmp", 40, 125, 125, 1000, 600);
 	explosion.StartAnim(player->GetPosition());
 	while (!explosion.isOver)
 	{
@@ -412,7 +391,7 @@ void Game::SpawnUFO()
 {
 	Vector2 pos = GetFreeCoordinates(200);
 
-	UFO* ufo = new UFO(m_Renderer, (char*)"Assets/ufo.bmp", pos.GetX() - 100, pos.GetY() - 100, 150, 150);
+	UFO* ufo = new UFO(&m_GameObjects, &m_MusicPlayer,  m_Renderer, (char*)"Assets/ufo.bmp", pos.GetX() - 100, pos.GetY() - 100, 150, 150);
 	m_GameObjects.push_back(ufo);
 	++m_ObjectsInScene;
 }

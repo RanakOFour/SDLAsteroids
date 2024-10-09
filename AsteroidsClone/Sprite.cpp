@@ -3,6 +3,17 @@
 #include <iostream>
 #include "Sprite.h"
 
+Sprite::Sprite(SDL_Renderer* renderer, char* imageFile)
+{
+	m_Renderer = renderer;
+	SDL_Surface* bmpFile = SDL_LoadBMP(imageFile);
+	m_Image = SDL_CreateTextureFromSurface(m_Renderer, bmpFile);
+	SDL_FreeSurface(bmpFile);
+	m_SpritePosition = SDL_Rect();
+
+	m_Rotation = 0.0f;
+}
+
 Sprite::Sprite(SDL_Renderer* renderer, int x, int y, int w, int h)
 {
 	m_Renderer = renderer;

@@ -2,8 +2,8 @@
 #include "Player.h"
 
 
-Player::Player(SDL_Renderer* renderer, char* file, int x, int y, int w, int h)
-	: Spaceship(renderer, file, x, y, w, h, 3, 0, 'P')
+Player::Player(std::vector<GameObject*>* objectsInScene, MusicPlayer* musicPlayer, SDL_Renderer* renderer, char* file, int x, int y, int w, int h)
+	: Spaceship(objectsInScene, musicPlayer, renderer, file, x, y, w, h, 3, 0, 'P')
 {
 
 }
@@ -86,7 +86,14 @@ void Player::HandleInput()
 	{
 		m_CanShoot = false;
 		m_IsShooting = true;
+		CreateBullet();
 	}
+}
+
+void Player::PerFrame()
+{
+	HandleInput();
+	Move();
 }
 
 int Player::OnHit(char type)

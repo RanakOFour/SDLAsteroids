@@ -4,9 +4,11 @@
 #include "GameObject.h"
 #include "Bullet.h"
 
-GameObject::GameObject(SDL_Renderer* renderer, char* file, float x, float y, int w, int h, int points, char type) :
+GameObject::GameObject(std::vector<GameObject*>* objectsInScene, MusicPlayer* musicPlayer, SDL_Renderer* renderer, char* file, float x, float y, int w, int h, int points, char type) :
 	Sprite(renderer, file, (int)x, (int)y, w, h)
 {
+	m_ObjectsInScene = objectsInScene;
+	m_musicPlayer = musicPlayer;
 	m_Velocity = Vector2(0.0f, 0.0f);
 	m_Position = Vector2(x, y);
 	m_RotationSpeed = 0.0f;
@@ -15,9 +17,11 @@ GameObject::GameObject(SDL_Renderer* renderer, char* file, float x, float y, int
 	m_Type = type;
 };
 
-GameObject::GameObject(SDL_Renderer* renderer, char* file, float x, float y, int w, int h, int points, char type, Vector2 parentVelocity) :
+GameObject::GameObject(std::vector<GameObject*>* objectsInScene, MusicPlayer* musicPlayer, SDL_Renderer* renderer, char* file, float x, float y, int w, int h, int points, char type, Vector2 parentVelocity) :
 	Sprite(renderer, file, (int)x, (int)y, w, h)
 {
+	m_ObjectsInScene = objectsInScene;
+	m_musicPlayer = musicPlayer;
 	m_Velocity = parentVelocity;
 	m_Position = Vector2(x, y);
 	m_RotationSpeed = 0.0f;
@@ -30,6 +34,11 @@ GameObject::GameObject(SDL_Renderer* renderer, char* file, float x, float y, int
 
 GameObject::~GameObject()
 {}
+
+void GameObject::PerFrame()
+{
+	Move();
+}
 
 void GameObject::Move()
 {
@@ -60,6 +69,19 @@ void GameObject::Move()
 	m_SpritePosition.y = (int)m_Position.GetY();
 }
 
+int GameObject::OnHit(char type)
+{
+	m_ToBeDeleted = true;
+	return m_Points;
+}
+
+void GameObject::Rotate(float radians)
+{
+	float xForY = m_Velocity.GetX();
+	m_Velocity.SetX(-((m_Velocity.GetX() * cosf(radians)) - (m_Velocity.GetY() * sinf(-radians))));
+	m_Velocity.SetY((xForY * sinf(radians)) + (m_Velocity.GetY() * cosf(-radians)));
+}
+
 void GameObject::SetVelocity(float x, float y)
 {
 	m_Velocity.SetX(x);
@@ -86,13 +108,6 @@ Vector2 GameObject::GetPosition()
 	return m_Position;
 }
 
-void GameObject::Rotate(float radians)
-{
-	float xForY = m_Velocity.GetX();
-	m_Velocity.SetX(-((m_Velocity.GetX() * cosf(radians)) - (m_Velocity.GetY() * sinf(-radians))));
-	m_Velocity.SetY((xForY * sinf(radians)) + (m_Velocity.GetY() * cosf(-radians)));
-}
-
 void GameObject::SetDeleted(bool del)
 {
 	m_ToBeDeleted = false;
@@ -111,10 +126,4 @@ int GameObject::GetPoints()
 char GameObject::GetType()
 {
 	return m_Type;
-}
-
-int GameObject::OnHit(char type)
-{
-	m_ToBeDeleted = true;
-	return m_Points;
 }

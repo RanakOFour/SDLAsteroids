@@ -1,16 +1,14 @@
 #include <SDL.h>
 #include <vector>
 #include "Vector2.h"
+#include "Sprite.h"
 
 #pragma once
 #define H_ANIMATION
 
-class Animation
+class Animation : public Sprite
 {
 private:
-	SDL_Renderer* m_Renderer;
-	SDL_Texture* m_SpriteSheet;
-	SDL_Rect m_SpritePosition;
 	std::vector<SDL_Rect*> m_Frames;
 	int currentFrame;
 

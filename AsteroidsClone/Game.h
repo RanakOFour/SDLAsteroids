@@ -36,7 +36,6 @@ public:
 	bool GameLoop();
 	void ShowTutorial();
 	void CreateAsteroids();
-	void CreateChildAsteroids(int baseIndex);
 	void RespawnPlayer(Player* player);
 	void SpawnUFO();
 	bool GameOverScreen();

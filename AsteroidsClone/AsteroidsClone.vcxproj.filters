@@ -95,10 +95,10 @@
     <ClInclude Include="MusicPlayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Sprite.h">
+    <ClInclude Include="TextSprite.h">
       <Filter>Header Files\Sprite</Filter>
     </ClInclude>
-    <ClInclude Include="TextSprite.h">
+    <ClInclude Include="Sprite.h">
       <Filter>Header Files\Sprite</Filter>
     </ClInclude>
   </ItemGroup>

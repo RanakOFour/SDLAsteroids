@@ -13,6 +13,7 @@ protected:
 	float m_Rotation;
 
 public:
+	Sprite(SDL_Renderer* renderer, char* imageFile);
 	Sprite(SDL_Renderer* renderer, int x, int y, int w, int h);
 	Sprite(SDL_Renderer* renderer, char* file, int x, int y, int w, int h);
 	~Sprite();

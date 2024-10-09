@@ -11,9 +11,9 @@ protected:
 	bool m_CanShoot;
 
 public:
-	Spaceship(SDL_Renderer* renderer, char* file, int x, int y, int w, int h, int lives, int points, char type);
+	Spaceship(std::vector<GameObject*>* objectsInScene, MusicPlayer* musicPlayer, SDL_Renderer* renderer, char* file, int x, int y, int w, int h, int lives, int points, char type);
 	virtual void HandleInput();
-	GameObject* CreateBullet();
+	virtual void CreateBullet();
 	bool IsShooting();
 	void SetShooting(bool canShoot);
 	int GetLives();

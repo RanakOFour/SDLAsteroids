@@ -11,8 +11,8 @@ protected:
 	float m_MaxDistance;
 
 public:
-	Bullet(std::vector<GameObject*>* objectsInScene, MusicPlayer* musicPlayer, SDL_Renderer* _renderer, char* _file, float parentX, float parentY, float parentRotation, float maxDistance);
+	Bullet(SDL_Renderer* _renderer, char* _file, float parentX, float parentY, float parentRotation, float maxDistance);
 	~Bullet();
-	void PerFrame();
+	void Move();
 	int OnHit(char otherType);
 };

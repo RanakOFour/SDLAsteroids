@@ -1,17 +1,12 @@
 #include "UFO.h"
 #include <random>
 
-UFO::UFO(std::vector<GameObject*>* objectsInScene, MusicPlayer* musicPlayer, SDL_Renderer* renderer, char* file, int x, int y, int w, int h)
-	: Spaceship(objectsInScene, musicPlayer, renderer, file, x, y, w, h, 1, 1000, 'U')
+UFO::UFO(SDL_Renderer* renderer, char* file, int x, int y, int w, int h)
+	: Spaceship(renderer, file, x, y, w, h, 1, 1000, 'U')
 {
 	m_ReachedPosition = true;
 	m_SelectedPosition = Vector2(0, 0);
 };
-
-void UFO::PerFrame()
-{
-	Move();
-}
 
 void UFO::Move()
 {

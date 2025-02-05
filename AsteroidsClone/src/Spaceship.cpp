@@ -7,8 +7,8 @@
 #include "Spaceship.h"
 #include "Vector2.h"
 
-Spaceship::Spaceship(std::vector<GameObject*>* objectsInScene, MusicPlayer* musicPlayer, SDL_Renderer* renderer, char* file, int x, int y, int w, int h, int lives, int points, char type) :
-	GameObject(objectsInScene, musicPlayer, renderer, file, (int)x, (int)y, w, h, points, type)
+Spaceship::Spaceship(SDL_Renderer* renderer, char* file, int x, int y, int w, int h, int lives, int points, char type) :
+	GameObject(renderer, file, (int)x, (int)y, w, h, points, type)
 {
 	m_Lives = lives;
 	m_CanShoot = true;
@@ -20,7 +20,7 @@ void Spaceship::HandleInput()
 	
 }
 
-void Spaceship::CreateBullet()
+GameObject* Spaceship::CreateBullet()
 {
 	m_IsShooting = false;
 	//Calculate the correct position for the bullet (infront of the spaceship)
@@ -35,11 +35,10 @@ void Spaceship::CreateBullet()
 
 	float adjustedX = rotatedXRelativeToParent + centreX;
 	float adjustedY = rotatedYRelativeToParent + centreY;
-	Bullet* toReturn = new Bullet(m_ObjectsInScene, m_musicPlayer, m_Renderer, (char*)"Assets/projectile.bmp", adjustedX, adjustedY, m_Rotation, 1000);
-	m_ObjectsInScene->push_back(toReturn);
-	m_musicPlayer->BulletSoundEffect();
+	Bullet* toReturn = new Bullet(m_Renderer, (char*)"Assets/projectile.bmp", adjustedX, adjustedY, m_Rotation, 1000);
 	toReturn->SetVelocity(0, 15);
 	toReturn->Rotate(rotationRadians);
+	return toReturn;
 }
 
 bool Spaceship::IsShooting()

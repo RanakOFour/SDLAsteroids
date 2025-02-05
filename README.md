@@ -1,2 +1,2 @@
 # SDLAsteroids
- An Asteroids clone made in SDL with C++
+ An Asteroids clone made in SDL with C++ at the end of my first year at university. The visual and audio assets were gathered from various sources, namely the [Background](https://deep-fold.itch.io/space-background-generator) from itch.io and the music from the artist [Context Sensitive](https://www.youtube.com/ContextSensitive)

@@ -27,84 +27,82 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="src\Animation.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Game.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\MusicPlayer.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Vector2.cpp">
+      <Filter>Resource Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Game.cpp">
-      <Filter>Resource Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Vector2.cpp">
-      <Filter>Resource Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Asteroid.cpp">
+    <ClCompile Include="src\UFO.cpp">
       <Filter>Resource Files\GameObjects</Filter>
     </ClCompile>
-    <ClCompile Include="Bullet.cpp">
+    <ClCompile Include="src\Spaceship.cpp">
       <Filter>Resource Files\GameObjects</Filter>
     </ClCompile>
-    <ClCompile Include="GameObject.cpp">
+    <ClCompile Include="src\Player.cpp">
       <Filter>Resource Files\GameObjects</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
+    <ClCompile Include="src\GameObject.cpp">
       <Filter>Resource Files\GameObjects</Filter>
     </ClCompile>
-    <ClCompile Include="Animation.cpp">
-      <Filter>Resource Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Spaceship.cpp">
+    <ClCompile Include="src\Bullet.cpp">
       <Filter>Resource Files\GameObjects</Filter>
     </ClCompile>
-    <ClCompile Include="UFO.cpp">
+    <ClCompile Include="src\Asteroid.cpp">
       <Filter>Resource Files\GameObjects</Filter>
     </ClCompile>
-    <ClCompile Include="MusicPlayer.cpp">
-      <Filter>Resource Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Sprite.cpp">
+    <ClCompile Include="src\Sprite.cpp">
       <Filter>Resource Files\Sprite</Filter>
     </ClCompile>
-    <ClCompile Include="TextSprite.cpp">
+    <ClCompile Include="src\TextSprite.cpp">
       <Filter>Resource Files\Sprite</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Game.h">
+    <ClInclude Include="include\Animation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Vector2.h">
+    <ClInclude Include="include\Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Asteroid.h">
-      <Filter>Header Files\GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="GameObject.h">
-      <Filter>Header Files\GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Header Files\GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="Animation.h">
+    <ClInclude Include="include\MusicPlayer.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Spaceship.h">
-      <Filter>Header Files\GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="UFO.h">
-      <Filter>Header Files\GameObjects</Filter>
-    </ClInclude>
-    <ClInclude Include="MusicPlayer.h">
+    <ClInclude Include="include\Vector2.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TextSprite.h">
+    <ClInclude Include="include\Asteroid.h">
+      <Filter>Header Files\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Bullet.h">
+      <Filter>Header Files\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\GameObject.h">
+      <Filter>Header Files\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Player.h">
+      <Filter>Header Files\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\Spaceship.h">
+      <Filter>Header Files\GameObjects</Filter>
+    </ClInclude>
+    <ClInclude Include="include\TextSprite.h">
       <Filter>Header Files\Sprite</Filter>
     </ClInclude>
-    <ClInclude Include="Sprite.h">
+    <ClInclude Include="include\Sprite.h">
       <Filter>Header Files\Sprite</Filter>
     </ClInclude>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Bullet.h">
+    <ClInclude Include="include\UFO.h">
       <Filter>Header Files\GameObjects</Filter>
-    </None>
+    </ClInclude>
   </ItemGroup>
 </Project>

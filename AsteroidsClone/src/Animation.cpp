@@ -1,11 +1,14 @@
 #include "Animation.h"
-#include "Sprite.h"
 #include <SDL.h>
 #include <vector>
 
-Animation::Animation(SDL_Renderer* renderer, char* imageFile, int frameCount, int frameW, int frameH, int totalFrameW, int totalFrameH) :
-	Sprite(renderer, imageFile)
+Animation::Animation(SDL_Renderer* renderer, char* imageFile, int frameCount, int frameW, int frameH, int totalFrameW, int totalFrameH)
 {
+	m_Renderer = renderer;
+	SDL_Surface* bmpFile = SDL_LoadBMP(imageFile);
+	m_SpriteSheet = SDL_CreateTextureFromSurface(m_Renderer, bmpFile);
+	SDL_FreeSurface(bmpFile);
+
 	m_Frames = std::vector<SDL_Rect*>();
 	for (int i = 0; i < totalFrameH; i += frameH)
 	{
@@ -20,6 +23,8 @@ Animation::Animation(SDL_Renderer* renderer, char* imageFile, int frameCount, in
 		}
 	}
 	currentFrame = 0;
+
+	m_SpritePosition = SDL_Rect();
 	isOver = false;
 }
 
@@ -30,7 +35,7 @@ void Animation::StartAnim(Vector2 position)
 	m_SpritePosition.w = 150;
 	m_SpritePosition.h = 150;
 	
-	SDL_RenderCopy(m_Renderer, m_Image, m_Frames[currentFrame], &m_SpritePosition);
+	SDL_RenderCopy(m_Renderer, m_SpriteSheet, m_Frames[currentFrame], &m_SpritePosition);
 	++currentFrame;
 }
 
@@ -38,7 +43,7 @@ void Animation::NextFrame()
 {
 	if (currentFrame != m_Frames.size())
 	{
-		SDL_RenderCopy(m_Renderer, m_Image, m_Frames[currentFrame], &m_SpritePosition);
+		SDL_RenderCopy(m_Renderer, m_SpriteSheet, m_Frames[currentFrame], &m_SpritePosition);
 		++currentFrame;
 	}
 	else
